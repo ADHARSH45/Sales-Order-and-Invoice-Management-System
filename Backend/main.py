@@ -3,6 +3,8 @@ from database import Base,engine
 from models.customers import Customer
 from routes.customer import router as customer_router
 from routes.products import router as product_router
+from routes.order import router as order_route
+
 
 app = FastAPI(title="Sales Order and Invoice Management System")
 
@@ -14,3 +16,4 @@ def root():
 
 app.include_router(customer_router)
 app.include_router(product_router)
+app.include_router(order_route)
