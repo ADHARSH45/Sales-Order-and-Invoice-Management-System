@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Payment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-10">
+
+<h1 class="text-2xl font-bold mb-6">Payment</h1>
+
+<div class="bg-white p-6 rounded shadow space-y-3">
+<select id="method" class="w-full border p-2">
+  <option>UPI</option>
+  <option>Card</option>
+  <option>Cash</option>
+</select>
+
+<select id="status" class="w-full border p-2">
+  <option>PAID</option>
+  <option>PENDING</option>
+</select>
+
+<button onclick="confirmPayment()"
+class="w-full bg-blue-600 text-white p-2 rounded">
+Confirm Payment
+</button>
+
+<div id="paymentResult" class="mt-4 font-semibold"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
