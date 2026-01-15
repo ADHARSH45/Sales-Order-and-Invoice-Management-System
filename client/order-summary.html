@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Order Summary</title>
+
+  <!-- Tailwind (same as other pages) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script defer src="js/summary.js"></script>
+  <script src = 'js/api.js'></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex">
+
+  <!-- SIDEBAR (same pattern as orders.html) -->
+  <aside class="w-64 bg-slate-900 text-white flex flex-col">
+      <div class="p-6 border-b border-slate-700">
+        <h1 class="text-2xl font-bold tracking-tight">SalesSys</h1>
+        <p class="text-sm text-slate-400 mt-1">Sales Management</p>
+      </div>
+      <nav class="flex-1 p-4 space-y-2">
+        <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-3m0 0l7-4 7 4M5 9v10a1 1 0 001 1h12a1 1 0 001-1V9m-9 11l4-4m0 0l4 4m-4-4v4"></path>
+          </svg>
+          Dashboard
+        </a>
+       
+        <a href="products.html" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-800 text-white font-medium transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m0 0l8 4m-8-4v10l8 4m0-10l8 4m-8-4v10"></path>
+          </svg>
+          Products
+        </a>
+        <a href="orders.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+          </svg>
+          Orders
+        </a>
+        <a href="invoice.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          Invoices
+        </a>
+      </nav>
+      <div class="p-4 border-t border-slate-700">
+        <div class="bg-slate-800 rounded-lg p-4">
+          <p class="text-xs text-slate-400">Version</p>
+          <p class="text-sm font-semibold">1.0.0</p>
+        </div>
+      </div>
+    </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 p-6">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-semibold">Order Summary</h1>
+      <a href="orders.html"
+         class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 text-sm">
+        ← Back to Orders
+      </a>
+    </div>
+
+    <!-- CUSTOMER DETAILS -->
+    <div class="bg-white rounded shadow p-6 mb-6">
+      <h2 class="text-lg font-semibold mb-4">Customer Details</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+        <p><span class="font-medium">Name:</span> <span id="customerName"></span></p>
+        <p><span class="font-medium">Email:</span> <span id="customerEmail"></span></p>
+        <p><span class="font-medium">Phone:</span> <span id="customerPhone"></span></p>
+        <p><span class="font-medium">Address:</span> <span id="customerAddress"></span></p>
+        <p><span class="font-medium">Order Date:</span> <span id="createdAt"></span></p>
+        <p><span class="font-medium">Order ID:</span> #<span id="orderId"></span></p>
+      </div>
+    </div>
+
+    <!-- ORDER ITEMS -->
+    <div class="bg-white rounded shadow p-6 mb-6">
+      <h2 class="text-lg font-semibold mb-4">Order Items</h2>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full border text-sm">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-4 py-2 text-left">Product</th>
+              <th class="px-4 py-2 text-right">Price</th>
+              <th class="px-4 py-2 text-center">Quantity</th>
+              <th class="px-4 py-2 text-right">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody id="itemsTable" class="divide-y">
+            <!-- JS rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TOTAL + ACTIONS -->
+    <div class="bg-white rounded shadow p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div class="text-lg font-semibold">
+        Total Amount:
+        <span class="text-green-600">₹ <span id="totalAmount">0</span></span>
+      </div>
+
+      <div class="flex gap-3">
+      <button id = "generateInvoiceBtn"
+      data-order-id=""
+          class="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+          Generate Invoice
+      </button>
+
+        <button onclick="payNow()"
+          class="px-5 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+          Pay Now
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+</body>
+</html>

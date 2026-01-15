@@ -9,6 +9,7 @@ class OrderItem(Base):
     order_id = Column(Integer, ForeignKey("sales_orders.id"))
     product_id = Column(Integer, ForeignKey("Products.id"))
     quantity = Column(Integer, nullable=False)
+    
 
     order = relationship("SalesOrder", back_populates="items")
     product = relationship("Products")

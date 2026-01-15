@@ -1,0 +1,85 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orders - SalesSys</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50">
+<div class="flex h-screen">
+
+  <!-- SIDEBAR -->
+  <aside class="w-64 bg-slate-900 text-white flex flex-col">
+    <div class="p-6 border-b border-slate-700">
+      <h1 class="text-2xl font-bold">SalesSys</h1>
+      <p class="text-sm text-slate-400">Sales Management</p>
+    </div>
+
+    <nav class="flex-1 p-4 space-y-2">
+      <a href="index.html" class="block px-4 py-3 rounded text-slate-300 hover:bg-slate-800">Dashboard</a>
+      <a href="products.html" class="block px-4 py-3 rounded text-slate-300 hover:bg-slate-800">Products</a>
+      <a href="orders.html" class="block px-4 py-3 rounded bg-slate-800 text-white">Orders</a>
+      <a href="invoice.html" class="block px-4 py-3 rounded text-slate-300 hover:bg-slate-800">Invoices</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="flex-1 overflow-auto p-8">
+
+    <div class="flex justify-between mb-6">
+      <div>
+        <h2 class="text-3xl font-bold">Orders</h2>
+        <p class="text-gray-600">Create and manage orders</p>
+      </div>
+
+      <a href="add-order.html"
+         class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+        + New Order
+      </a>
+    </div>
+
+    <!-- LOADING -->
+    <div id="loadingState" class="hidden text-center py-10 text-gray-500">
+      Loading orders...
+    </div>
+
+    <!-- ERROR -->
+    <div id="errorState" class="hidden text-center py-10 text-red-600">
+      <p id="errorMessage"></p>
+    </div>
+
+    <!-- EMPTY -->
+    <div id="emptyState" class="hidden text-center py-10 text-gray-500">
+      No orders found.
+    </div>
+
+    <!-- TABLE -->
+    <div id="tableState" class="hidden bg-white rounded-lg shadow overflow-hidden">
+      <table class="min-w-full">
+        <thead class="bg-gray-100 text-gray-700 text-sm">
+          <tr>
+            <th class="px-6 py-3 text-left">Order ID</th>
+            <th class="px-6 py-3 text-left">Customer</th>
+            <th class="px-6 py-3 text-center">Items</th>
+            <th class="px-6 py-3 text-right">Total</th>
+            <th class="px-6 py-3 text-center">Date</th>
+            <th class="px-6 py-3 text-center">Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="ordersTableBody" class="divide-y"></tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/orders.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard | SalesSys</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+
+<div class="flex min-h-screen">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-slate-900 text-white flex flex-col">
+    <div class="p-6 border-b border-slate-700">
+      <h1 class="text-2xl font-bold">SalesSys</h1>
+      <p class="text-sm text-slate-400">Sales Management</p>
+    </div>
+
+   <nav class="flex-1 p-4 space-y-2">
+        <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-3m0 0l7-4 7 4M5 9v10a1 1 0 001 1h12a1 1 0 001-1V9m-9 11l4-4m0 0l4 4m-4-4v4"></path>
+          </svg>
+          Dashboard
+        </a>
+       
+        <a href="products.html" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-800 text-white font-medium transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m0 0l8 4m-8-4v10l8 4m0-10l8 4m-8-4v10"></path>
+          </svg>
+          Products
+        </a>
+        <a href="orders.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+          </svg>
+          Orders
+        </a>
+        <a href="invoice.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          Invoices
+        </a>
+      </nav>
+
+    <div class="p-4 border-t border-slate-700 text-xs text-slate-400">
+      Version 1.0.0
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="flex-1 p-8">
+
+    <h2 class="text-3xl font-bold text-gray-900 mb-6">Dashboard</h2>
+
+    <!-- Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
+
+      <div class="bg-white p-6 rounded-xl shadow-sm border">
+        <p class="text-sm text-gray-500">Total Revenue</p>
+        <h3 id="totalRevenue" class="text-2xl font-bold text-green-600 mt-2">₹0</h3>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow-sm border">
+        <p class="text-sm text-gray-500">Total Orders</p>
+        <h3 id="orderCount" class="text-2xl font-bold mt-2">0</h3>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow-sm border">
+        <p class="text-sm text-gray-500">Products</p>
+        <h3 id="productCount" class="text-2xl font-bold mt-2">0</h3>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow-sm border">
+        <p class="text-sm text-gray-500">Paid Invoices</p>
+        <h3 id="paidInvoices" class="text-2xl font-bold mt-2">0</h3>
+      </div>
+
+    </div>
+
+    <!-- Low Stock -->
+    <div class="bg-white rounded-xl shadow-sm border p-6">
+      <h3 class="text-lg font-semibold mb-4">Low Stock Products</h3>
+      <ul id="lowStockList" class="space-y-2 text-sm text-gray-700">
+        <li class="text-gray-400">Loading...</li>
+      </ul>
+    </div>
+
+  </main>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
