@@ -17,7 +17,7 @@ def get_order_total(order: SalesOrder) -> float:
         total += item.quantity * item.product.price
     return total
 
-@router.get("/{order_id}/paid",response_model=OrderResponse)
+@router.post("/{order_id}/paid",response_model=OrderResponse)
 def pay_order(order_id : int,db : Session = Depends(get_db)):
     order = db.query(SalesOrder).filter(SalesOrder.id == order_id).first()
     
@@ -116,6 +116,7 @@ def create_order(data: OrderCreate, db: Session = Depends(get_db)):
             "created_at": order.created_at, # type: ignore
             "total_amount": get_order_total(order),
             "order_paid":order.paid, # type: ignore
+            "invoice_generated" : order.invoice_generated, # type: ignore
             "items": [
                 {
                     "product_id": item.product_id,
