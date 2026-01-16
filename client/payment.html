@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Payment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white w-full max-w-md rounded-xl shadow p-6 space-y-6">
+
+    <h2 class="text-2xl font-bold text-center">Complete Payment</h2>
+    <p class="text-center text-sm text-gray-500">
+      Order ID: <span id="orderIdText" class="font-semibold"></span>
+    </p>
+
+    <!-- PAYMENT METHODS -->
+    <div class="space-y-3">
+      <label class="flex items-center gap-3">
+        <input type="radio" name="method" value="card" checked />
+        <span>Credit / Debit Card</span>
+      </label>
+
+      <label class="flex items-center gap-3">
+        <input type="radio" name="method" value="upi" />
+        <span>UPI</span>
+      </label>
+
+      <label class="flex items-center gap-3">
+        <input type="radio" name="method" value="cash" />
+        <span>Cash</span>
+      </label>
+    </div>
+
+    <!-- CARD FORM -->
+    <div id="cardForm" class="space-y-3">
+      <input class="w-full border rounded p-2" placeholder="Card Number" />
+      <div class="flex gap-3">
+        <input class="w-1/2 border rounded p-2" placeholder="MM/YY" />
+        <input class="w-1/2 border rounded p-2" placeholder="CVV" />
+      </div>
+    </div>
+
+    <!-- UPI FORM -->
+    <div id="upiForm" class="space-y-3 hidden">
+      <input class="w-full border rounded p-2" placeholder="UPI ID (example@upi)" />
+    </div>
+
+    <!-- PAY BUTTON -->
+    <button
+      onclick="payNow()"
+      class="w-full bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700">
+      Pay Now
+    </button>
+
+    <p id="statusMsg" class="text-center text-sm"></p>
+
+  </div>
+
+  <script src="js/payment.js"></script>
+</body>
+</html>
