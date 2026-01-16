@@ -14,6 +14,7 @@ async function loadOrderSummary() {
   try {
     const res = await fetch(`${API_BASE}/orders/${orderId}`);
     if (!res.ok) throw new Error("Failed to fetch order");
+    
 
     const order = await res.json();
     currentOrder = order; // ✅ save order
@@ -26,6 +27,8 @@ async function loadOrderSummary() {
     document.getElementById("customerAddress").textContent = order.customer_address;
     document.getElementById("createdAt").textContent =
       new Date(order.created_at).toLocaleString();
+   
+    
 
     // Items
     const tbody = document.getElementById("itemsTable");
@@ -51,6 +54,14 @@ async function loadOrderSummary() {
     });
 
     document.getElementById("totalAmount").textContent = total;
+
+    const paybtn = document.getElementById("paybtn");
+    if (order.order_paid){
+      paybtn.disabled = true;
+      paybtn.textContent = "Already Paid";
+      paybtn.classList.remove("bg-green-600", "hover:bg-green-700");
+      paybtn.classList.add("bg-gray-400", "cursor-not-allowed");
+    }
 
   } catch (err) {
     console.error(err);

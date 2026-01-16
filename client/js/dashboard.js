@@ -11,21 +11,16 @@ async function loadDashboard() {
     // Counts
     document.getElementById("productCount").textContent = products.length;
     document.getElementById("orderCount").textContent = orders.length;
+    const paidOrders = orders.filter(o => o.order_paid === true);
 
-    const paidInvoices = invoices.filter(i => i.payment_status === "PAID");
-    document.getElementById("paidInvoices").textContent = paidInvoices.length;
+    document.getElementById("paidInvoices").textContent = paidOrders.length;
 
-    // Revenue calculation
     let revenue = 0;
-
-    paidInvoices.forEach(invoice => {
-      invoice.items.forEach(item => {
-        revenue += item.price * item.quantity;
-      });
+    paidOrders.forEach(orders => {
+      revenue += Number(orders.total_amount || 0);
     });
 
-    document.getElementById("totalRevenue").textContent =
-      `₹${revenue.toLocaleString("en-IN")}`;
+    document.getElementById("totalRevenue").textContent = `₹ ${revenue.toLocaleString("en-IN")}`;
 
     // Low stock
     const lowStock = products.filter(p => p.stock <= 5);
