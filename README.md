@@ -32,20 +32,24 @@ This system helps manage customers, products, sales orders, and invoices through
 
 ---
 
-## 📂 Project Structure
+## 📁 Project Structure
+
+```
 Sales-Order-and-Invoice-Management-System/
 │
 ├── Backend/
-│ ├── main.py
-│ ├── models.py
-│ ├── schemas.py
-│ └── requirements.txt
+│   ├── main.py
+│   ├── models.py
+│   ├── schemas.py
+│   └── requirements.txt
 │
 ├── frontend/
-│ ├── index.html
-│ ├── script.js
-│ └── style.css
+│   ├── index.html
+│   ├── script.js
+│   └── style.css
 │
 ├── client/
 │
 └── README.md
+```
+
