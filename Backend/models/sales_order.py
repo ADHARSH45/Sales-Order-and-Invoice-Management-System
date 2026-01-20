@@ -9,10 +9,10 @@ class SalesOrder(Base):
     id = Column(Integer, primary_key=True, index=True)
 
     # Customer snapshot
-    customer_name = Column(String, nullable=False)
-    customer_email = Column(String, nullable=False)
-    customer_phone = Column(String, nullable=False)
-    customer_address = Column(String, nullable=True)
+    customer_name = Column(String(255), nullable=False)
+    customer_email = Column(String(255), nullable=False)
+    customer_phone = Column(String(255), nullable=False)
+    customer_address = Column(String(255), nullable=True)
     paid = Column(Boolean, default=False)
     invoice_generated = Column(Boolean,default = False)
 

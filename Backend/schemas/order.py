@@ -7,6 +7,7 @@ class OrderItemCreate(BaseModel):
     quantity: int
 
 class CustomerInfo(BaseModel):
+    
     name: str
     email: str
     phone: str

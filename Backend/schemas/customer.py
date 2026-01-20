@@ -6,6 +6,9 @@ class CustomerCreate(BaseModel):
     phone:str
     email:str | None = None
     address:str | None = None
+    total_amount : float
+    total_orders:int 
+    score :int
 
 class CustomerUpdate(BaseModel):
     name:str |None = None

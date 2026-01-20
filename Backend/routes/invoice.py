@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from database import get_db
 from models.sales_order import SalesOrder
+from models.customers import Customer
 
 router = APIRouter(
     prefix="/invoices",
@@ -14,11 +15,13 @@ router = APIRouter(
 @router.get("/")
 def get_invoices(db: Session = Depends(get_db)):
     orders = db.query(SalesOrder).all()
+    
     invoices = []
 
     for order in orders:
         total_amount = 0
         items = []
+        
 
         for item in order.items:
             product = item.product
@@ -41,6 +44,7 @@ def get_invoices(db: Session = Depends(get_db)):
             # ✅ customer data stored in order
             "customer_name": order.customer_name,
             "customer_phone": order.customer_phone,
+            "customer_email" : order.customer_email,
             "customer_address": order.customer_address,
 
             "total_amount": total_amount,
@@ -83,6 +87,7 @@ def get_invoice(order_id: int, db: Session = Depends(get_db)):
         # ✅ customer data from order
         "customer_name": order.customer_name,
         "customer_phone": order.customer_phone,
+        "customer_email" : order.customer_email,
         "customer_address": order.customer_address,
 
         "total_amount": total_amount,

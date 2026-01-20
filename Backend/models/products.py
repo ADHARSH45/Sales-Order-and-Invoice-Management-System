@@ -6,8 +6,8 @@ class Products(Base):
     __tablename__ = "Products"
 
     id = Column(Integer,primary_key=True,index = True)
-    name = Column(String,nullable =False)
-    description = Column(String)
+    name = Column(String(255),nullable =False)
+    description = Column(String(255))
     price = Column(Float,nullable = False)
     stock = Column(Integer,default=0)
     is_active = Column(Boolean,default = True)

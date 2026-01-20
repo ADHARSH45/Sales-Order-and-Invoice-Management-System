@@ -5,7 +5,10 @@ from database import get_db
 from models.sales_order import SalesOrder
 from models.order_item import OrderItem
 from models.products import Products
+from models.customers import Customer
 from schemas.order import OrderCreate, OrderResponse
+from schemas.customer import CustomerCreate
+from routes.customer import create_customer
 
 router = APIRouter(prefix="/orders", tags=["Orders"])
 
@@ -20,6 +23,7 @@ def get_order_total(order: SalesOrder) -> float:
 @router.post("/{order_id}/paid",response_model=OrderResponse)
 def pay_order(order_id : int,db : Session = Depends(get_db)):
     order = db.query(SalesOrder).filter(SalesOrder.id == order_id).first()
+    customer = db.query(Customer).filter(Customer.email == order.customer_email).first() # type: ignore
     
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
@@ -28,6 +32,9 @@ def pay_order(order_id : int,db : Session = Depends(get_db)):
         raise HTTPException(status_code=400,detail="order already paid")
     
     order.paid = True # type: ignore
+    customer.total_orders += 1 # type: ignore
+    customer.total_amount += get_order_total(order) # type: ignore
+    customer.score += (customer.total_orders * 10 + (customer.total_amount / 100)) # type: ignore
     db.commit()
 
     return  {
@@ -54,12 +61,18 @@ def pay_order(order_id : int,db : Session = Depends(get_db)):
 @router.post("/", response_model=OrderResponse)
 def create_order(data: OrderCreate, db: Session = Depends(get_db)):
     try:
+        customer = db.query(Customer).filter(Customer.email == data.customer.email ).first() # type: ignore
+        if not customer:
+            customer = {'name' : data.customer.name,"email":data.customer.email,"phone":data.customer.phone,"address" : data.customer.address,"total_amount":0.0,"total_orders" : 0,"score" : 0} # type: ignore
+            customer = CustomerCreate(**customer)
+            create_customer(db = db,customer=customer)
+            
         # 1️⃣ Create order
         order = SalesOrder(
-            customer_name=data.customer.name,
-            customer_email=data.customer.email,
-            customer_phone=data.customer.phone,
-            customer_address=data.customer.address,
+            customer_name=data.customer.name, # type: ignore
+            customer_email=data.customer.email, # type: ignore
+            customer_phone=data.customer.phone, # type: ignore
+            customer_address=data.customer.address, # type: ignore
             paid = False,
             invoice_generated = False
         )
@@ -91,7 +104,7 @@ def create_order(data: OrderCreate, db: Session = Depends(get_db)):
                 product_id=item.product_id,
                 quantity=item.quantity
             ))
-
+        
         # 3️⃣ Commit transaction
         db.commit()
 
@@ -105,6 +118,8 @@ def create_order(data: OrderCreate, db: Session = Depends(get_db)):
             .filter(SalesOrder.id == order.id)
             .first()
         )
+        customer = db.query(Customer).filter(Customer.email == data.customer.email).first()
+        customer.total_amount += get_order_total(order) # type: ignore
 
         # 5️⃣ Build response manually
         return {
