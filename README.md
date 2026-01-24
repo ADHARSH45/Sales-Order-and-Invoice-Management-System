@@ -90,7 +90,7 @@ uvicorn main:app --reload
 Backend URL: http://127.0.0.1:8000
 Swagger UI: http://127.0.0.1:8000/docs
 
-# 5️⃣ Run Client
+# 4️⃣ Run Client  
 Open client/pages/index.html in a browser
 
 ## 🧪 Testing
