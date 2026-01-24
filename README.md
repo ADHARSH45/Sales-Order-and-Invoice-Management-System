@@ -74,7 +74,7 @@ Sales-Order-and-Invoice-Management-System/
 ## ▶️ How to Run the Project
   # 1️⃣ Clone the Repository
   ```
-git clone https://github.com/your-username/Sales-Order-and-Invoice-Management-System.git
+git clone https://github.com/ADHARSH45/Sales-Order-and-Invoice-Management-System.git
 cd Sales-Order-and-Invoice-Management-System
 ```
 # 2️⃣ Create Virtual Environment
