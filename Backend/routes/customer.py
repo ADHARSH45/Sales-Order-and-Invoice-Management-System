@@ -45,7 +45,7 @@ def update_customer(customer_id:int , customer_data:CustomerUpdate, db :Session 
     db.refresh(customer)
     return customer
         
-    
+@router.patch("/")
 @router.delete("/{customer_id}")
 def delete_customer(customer_id:int, db:Session = Depends(get_db)):
     customer = db.query(Customer).filter(Customer.id == customer_id).first()

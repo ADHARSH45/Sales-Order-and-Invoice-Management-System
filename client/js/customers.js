@@ -19,6 +19,7 @@ const customerUIElements = {
   customerName: () => document.getElementById('customerName'),
   customerEmail: () => document.getElementById('customerEmail'),
   customerPhone: () => document.getElementById('customerPhone'),
+  customerAddress: ()=>document.getElementById('customerAddress')
 };
 
 function hideAllCustomerStates() {
@@ -59,6 +60,7 @@ function renderCustomerRow(customer) {
     <td class="px-6 py-4 text-sm font-semibold text-gray-900">${customer.name}</td>
     <td class="px-6 py-4 text-sm text-gray-600">${customer.email || '-'}</td>
     <td class="px-6 py-4 text-sm text-gray-600">${customer.phone || '-'}</td>
+    <td class="px-6 py-4 text-sm text-gray-600">${customer.total_amount || '-'}</td>
     <td class="px-6 py-4 text-center space-x-2">
       <button onclick="openEditCustomerModal(${customer.id})" class="px-3 py-1 bg-blue-100 text-blue-700 rounded text-xs font-medium hover:bg-blue-200 transition-colors">
         Edit
@@ -115,6 +117,7 @@ async function handleCustomerFormSubmit(e) {
     name: customerUIElements.customerName().value,
     email: customerUIElements.customerEmail().value,
     phone: customerUIElements.customerPhone().value,
+    address : customerUIElements.customerAddress().value
   };
 
   try {

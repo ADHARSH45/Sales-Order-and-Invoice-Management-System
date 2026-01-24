@@ -15,6 +15,7 @@ const invoiceUIElements = {
   tableState: () => document.getElementById("tableState"),
   emptyState: () => document.getElementById("emptyState"),
   invoiceTableBody: () => document.getElementById("invoiceTableBody"),
+  customerFilter: () => document.getElementById("customerFilter"),
   searchInput: () => document.getElementById("searchInput"),
   invoiceModal: () => document.getElementById("invoiceModal"),
   invoiceContent: () => document.getElementById("invoiceContent"),
@@ -59,15 +60,47 @@ function formatCurrency(val) {
 function formatDate(date) {
   return new Date(date).toLocaleString();
 }
+function populateCustomerFilter() {
+  const select = invoiceUIElements.customerFilter();
+  select.innerHTML = `<option value="">All Customers</option>`;
+
+  const uniqueCustomers = [
+    ...new Set(invoiceState.invoices.map(inv => inv.customer_name))
+  ];
+
+  uniqueCustomers.forEach(name => {
+    const option = document.createElement("option");
+    option.value = name.toLowerCase();
+    option.textContent = name;
+    select.appendChild(option);
+  });
+}
+
 
 /* ================== FILTER ================== */
 
 function applyFilters() {
-  const q = invoiceUIElements.searchInput().value.toLowerCase();
+  const searchQuery =
+    invoiceUIElements.searchInput().value.trim().toLowerCase();
 
-  invoiceState.filteredInvoices = invoiceState.invoices.filter(inv =>
-    String(inv.order_id).includes(q)
-  );
+  const selectedCustomer =
+    document.getElementById("customerFilter").value;
+
+  invoiceState.filteredInvoices = invoiceState.invoices.filter(inv => {
+    const matchesInvoiceId =
+      String(inv.order_id).includes(searchQuery);
+
+    const matchesCustomerSearch =
+      inv.customer_name.toLowerCase().includes(searchQuery);
+
+    const matchesCustomerDropdown =
+      !selectedCustomer || inv.customer_name === selectedCustomer;
+
+    return (
+      (matchesInvoiceId || matchesCustomerSearch) &&
+      matchesCustomerDropdown
+    );
+  });
 
   if (invoiceState.filteredInvoices.length === 0) {
     showEmpty();
@@ -76,6 +109,8 @@ function applyFilters() {
     showTable();
   }
 }
+
+
 
 /* ================== TABLE ================== */
 
@@ -186,16 +221,7 @@ function renderInvoiceModal(invoice) {
         </span>
       </div>
 
-      <div class="flex justify-end gap-2 pt-4">
-        <button onclick="printInvoice()"
-          class="px-4 py-2 bg-gray-800 text-white rounded">
-          Print
-        </button>
-        <button onclick="closeInvoiceModal()"
-          class="px-4 py-2 bg-gray-200 rounded">
-          Close
-        </button>
-      </div>
+     
 
     </div>
   `;
@@ -249,11 +275,15 @@ async function initializeInvoices() {
       items: o.items || [],
     }));
 
-    invoiceUIElements.searchInput()
-      .addEventListener("input", applyFilters);
+    
+
 
     invoiceState.filteredInvoices = [...invoiceState.invoices];
+    invoiceUIElements.customerFilter().addEventListener("change",applyFilters);
+    populateCustomerFilter();
 
+    invoiceUIElements.searchInput()
+      .addEventListener("input", applyFilters);
     if (invoiceState.filteredInvoices.length === 0) {
       showEmpty();
     } else {

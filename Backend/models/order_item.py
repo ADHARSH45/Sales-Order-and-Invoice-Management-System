@@ -12,4 +12,4 @@ class OrderItem(Base):
     
 
     order = relationship("SalesOrder", back_populates="items")
-    product = relationship("Products")
+    product = relationship("Products",cascade="all,delete")
